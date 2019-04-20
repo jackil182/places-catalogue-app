@@ -1,10 +1,18 @@
 mixin pagination(currPage, pagesNum, count)
   .pagination
-    .pagination__prev
-      if currPage > 1
-        a(href=`/stores/page/${currPage - 1}`) Prev
-    .pagination__text
-      p Page #{currPage} of #{pagesNum} - #{count} total results
-    .pagination__next
-      if currPage < pagesNum
-        a(href=`/stores/page/${parseFloat(currPage) + 1}`) Next
+    if currPage !== undefined && pagesNum !== undefined
+      .pagination__prev
+        if currPage > 1
+          if from === 'stores'
+            a(href=`/stores/page/${currPage - 1}`) Prev
+          if from === 'hearts'
+            a(href=`/hearts/page/${currPage - 1}`) Prev
+      .pagination__text
+        p Page #{currPage} of #{pagesNum} - #{count} total results
+      .pagination__next
+        if currPage < pagesNum
+          if from === 'stores'
+            a(href=`/stores/page/${parseFloat(currPage) + 1}`) Next
+          if from === 'hearts'
+            a(href=`/hearts/page/${parseFloat(currPage) + 1}`) Next
+          

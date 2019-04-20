@@ -71,7 +71,7 @@ router.post(
 );
 
 router.get('/map', storeController.mapPage);
-router.get('/hearts', authController.isLogedIn, catchErrors(storeController.getHearts));
+router.get('/hearts/page/:page', authController.isLogedIn, catchErrors(storeController.getHearts));
 router.post('/reviews/:id', authController.isLogedIn, catchErrors(reviewController.addReview));
 router.get('/top', catchErrors(storeController.getTopStores));
 

@@ -14,7 +14,8 @@
     "dev": "concurrently \"npm run watch\" \"npm run assets\" --names \"💻,📦\" --prefix name",
     "assets": "webpack -w --display-max-modules 0",
     "sample": "node ./data/load-sample-data.js",
-    "blowitallaway": "node ./data/load-sample-data.js --delete"
+    "blowitallaway": "node ./data/load-sample-data.js --delete",
+    "build": "webpack --config webpack.config.js"
   },
   "browserslist": "last 3 versions",
   "dependencies": {

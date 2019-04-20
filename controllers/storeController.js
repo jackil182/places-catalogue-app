@@ -68,30 +68,33 @@ exports.createStore = async (req, res) => {
 };
 
 exports.getStores = async (req, res) => {
+  const host = req.headers.referer.match(/https?:\/\/\w+:\d+/)[0];
   const currPage = req.params.page || 1;
   const limit = 6;
-  const skip = (currPage * limit) - limit;
+  const skip = currPage * limit - limit;
   // 1. query db for a list of all stores
-  const storesPromise = Store
-    .find()
+  const storesPromise = Store.find()
     .skip(skip)
     .limit(limit)
-    .sort({created: 'desc'});
+    .sort({ created: 'desc' });
 
-    const countPromise = Store.count();
+  const countPromise = Store.count();
 
-    const [stores, count] = await Promise.all([storesPromise, countPromise]);
+  const [stores, count] = await Promise.all([storesPromise, countPromise]);
 
-    const pagesNum = Math.ceil(count / limit);
+  const pagesNum = Math.ceil(count / limit);
 
-    if(!stores.length && skip) {
-      req.flash('info', `Hey! You asked for page ${currPage}. But that doesn't exist. So I put you on page ${pagesNum}`);
-      res.redirect(`/stores/page/${pagesNum}`);
-      return;
-    }
+  if (!stores.length && skip) {
+    req.flash(
+      'info',
+      `Hey! You asked for page ${currPage}. But that doesn't exist. So I put you on page ${pagesNum}`
+    );
+    res.redirect(`/stores/page/${pagesNum}`);
+    return;
+  }
 
   // console.log(stores);
-  res.render('stores', { title: 'Stores', stores, currPage, pagesNum, count });
+  res.render('stores', { title: 'Stores', stores, currPage, pagesNum, count, from: 'stores', host });
 };
 
 const confirmOwner = (store, user) => {
@@ -211,15 +214,46 @@ exports.heartStore = async (req, res) => {
 };
 
 exports.getHearts = async (req, res) => {
-  const stores = await Store.find({
+  // const x = req.headers.referer.match(/https?:\/\/\w+:\d+\//)[0] // gets the domain name
+  const host = req.headers.referer.match(/https?:\/\/\w+:\d+/)[0];
+  const currPage = req.params.page || 1;
+  const limit = 6;
+  const skip = currPage * limit - limit;
+
+  const storesPromise = Store.find({
     _id: { $in: req.user.hearts } // $in loops through an array
-  });
-  console.log(stores);
-  res.render('stores', { title: 'Hearted Stores', stores });
+  })
+    .skip(skip)
+    .limit(limit)
+    .sort({ created: 'desc' });
+    
+    const countPromise = Store.count({
+      _id: { $in: req.user.hearts }
+    });
+    
+    const [stores, count] = await Promise.all([storesPromise, countPromise]);
+    
+    const pagesNum = Math.ceil(count / limit);
+
+  if (!stores.length && skip) {
+    req.flash(
+      'info',
+      `Hey! You asked for page ${currPage}. But that doesn't exist. So I put you on page ${pagesNum}`
+    );
+    res.redirect(`/hearts/page/${pagesNum}`);
+    return;
+  }
+
+  // const stores = await Store.find({
+  //   _id: { $in: req.user.hearts } // $in loops through an array
+  // });
+  // console.log(stores);
+
+  res.render('stores', { title: 'Hearted Stores', stores, currPage, pagesNum, count, from: 'hearts', host });
 };
 
 module.exports.getTopStores = async (req, res) => {
   const stores = await Store.getTopStores();
-  res.render('topStores', {title: 'Top Stores!', stores});
+  res.render('topStores', { title: 'Top Stores!', stores });
   // res.json(stores);
-}
+};

@@ -9,5 +9,5 @@ block content
     //- pre= h.dump(stores)
     .stores 
       each store in stores
-        +storeCard(store)
-    +pagination(currPage, pagesNum, count)
+        +storeCard(store, host)
+    +pagination(currPage, pagesNum, count, from)
