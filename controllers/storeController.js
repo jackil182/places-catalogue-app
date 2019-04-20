@@ -216,6 +216,7 @@ exports.heartStore = async (req, res) => {
 exports.getHearts = async (req, res) => {
   // const x = req.headers.referer.match(/https?:\/\/\w+:\d+\//)[0] // gets the domain name
   // const host = req.headers.referer.match(/https?:\/\/\w+:\d+/)[0]; // //for localhost
+  const host = '';
   const currPage = req.params.page || 1;
   const limit = 6;
   const skip = currPage * limit - limit;
