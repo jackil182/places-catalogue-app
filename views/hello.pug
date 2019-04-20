@@ -1,0 +1,15 @@
+//- .wrapper
+//-   - const upDog = dog.toUpperCase();
+//-   p Hello! My dog's name is #{dog.toUpperCase()}
+//-   span Yo
+//-   img(src="/images/photos/1.jpg" alt=`Dog ${upDog}`)
+
+//- h2 
+//-   | Hello 
+  //- em How are you?
+
+extends layout
+
+block content
+  h2 Sale ends #{h.moment().endOf('day').fromNow()}
+  //- p Hello!
