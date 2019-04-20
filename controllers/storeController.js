@@ -68,7 +68,8 @@ exports.createStore = async (req, res) => {
 };
 
 exports.getStores = async (req, res) => {
-  // const host = req.headers.referer.match(/https?:\/\/\w+:\d+/)[0]; //for localhost
+  // const host = req.headers.referer.match(/https?:\/\/\w+:\d+/)[0]; // for developement env (localhost) 
+  const host = '';
   const currPage = req.params.page || 1;
   const limit = 6;
   const skip = currPage * limit - limit;
