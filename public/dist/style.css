@@ -702,7 +702,8 @@ label {
 .table {
   width: 100%; }
   .table td {
-    padding: 5px; }
+    padding: 5px;
+    text-align: center; }
   .table tr:nth-child(even) {
     background: white; }
   .table tr:nth-child(odd):not(:first-child) {
@@ -710,6 +711,8 @@ label {
   .table thead tr {
     background: #303030;
     color: white; }
+  .table .head-row {
+    text-transform: capitalize; }
 
 .stores {
   display: -ms-flexbox;

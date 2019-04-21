@@ -2,6 +2,7 @@
   width: 100%;
   td {
     padding: 5px;
+    text-align: center;
   }
   tr:nth-child(even) {
     background: white;
@@ -12,5 +13,9 @@
   thead tr {
     background: $black;
     color: white;
+  }
+
+  .head-row {
+    text-transform: capitalize;
   }
 }
